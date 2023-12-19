@@ -13,7 +13,7 @@
     canvas.width = 300;
     canvas.height = 300;
     const img = new Image();
-    img.src = "/src/assets/svelte.svg";
+    img.src = "src/assets/svelte.svg";
     img.onload = () => {
       w = img.width;
       h = img.height;
