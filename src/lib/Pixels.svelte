@@ -1,4 +1,5 @@
 <script lang="ts">
+  import svelteSvg from '/src/assets/svelte.svg'
   import { onMount } from "svelte";
   let canvas: HTMLCanvasElement;
   let h: number;
@@ -13,7 +14,7 @@
     canvas.width = 300;
     canvas.height = 300;
     const img = new Image();
-    img.src = "src/assets/svelte.svg";
+    img.src = svelteSvg;
     img.onload = () => {
       w = img.width;
       h = img.height;
