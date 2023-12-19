@@ -1,6 +1,6 @@
 <script lang="ts">
   import Block from "./lib/Block.svelte";
-  import Counter from "./lib/Counter.svelte";
+  import Counter from "./lib/Collection.svelte";
   import Heart from "./lib/Heart.svelte";
   import ParentChild from "./lib/ParentChild/ParentChild.svelte";
   import Saga from "./lib/Saga.svelte";

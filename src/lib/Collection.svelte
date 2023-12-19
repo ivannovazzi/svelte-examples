@@ -19,11 +19,7 @@
 
   onMount(async () => {
     elves = await loadData();
-  });  
-
-  $: zero = elves[0];
-
-  
+  });
 </script>
 
 
@@ -35,11 +31,4 @@
       <input type="text" bind:value={elf.name}/> has <input type="number" bind:value={elf.tally}/> presents and is <select bind:value={elf.status}><option value="good">good</option><option value="bad">bad</option></select>
     </div>
   {/each}
-  {zero?.name}
 </div>
-<!-- <button on:click={handleClick}>
-	Count: {count}
-</button>
-
-<p>{count} * 2 = {doubled}</p>
-<p>{doubled} * 2 = {quadrupled}</p> -->
