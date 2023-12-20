@@ -1,37 +1,52 @@
 <script lang="ts">
-  import Follower from "./lib/Follower.svelte";
-  import Counter from "./lib/Collection.svelte";
-  import Heart from "./lib/Heart.svelte";
-  import ParentChild from "./lib/ParentChild/ParentChild.svelte";
-  import Saga from "./lib/Saga.svelte";
-  import Pixels from "./lib/Pixels.svelte";
-  
-  const mode = import.meta.env.MODE;
-  const test = import.meta.env.VITE_TEST;
-  const testa = import.meta.env.TEST;
+  import { Link, Route, useLocation } from "svelte-navigator";
 
-  let tab = 0;
+  import Follower from "./components/Follower.svelte";
+  import Counter from "./components/Collection.svelte";
+  import Heart from "./components/Heart.svelte";
+  import ParentChild from "./components/ParentChild/ParentChild.svelte";
+  import Saga from "./components/Saga/Saga.svelte";
+  import Pixels from "./components/Pixels.svelte";
+
+  const mode = import.meta.env.MODE;
+  const isDevelopment = mode === "development";
+
   const tabs = [
-    { name: "Counter", component: Counter },
-    { name: "Follower", component: Follower },
-    { name: "Heart", component: Heart },
-    { name: "Isolated Store + Context", component: ParentChild },
-    { name: "Saga", component: Saga },
-    { name: "Pixels", component: Pixels },
+    { path: "counter", name: "Counter", component: Counter },
+    { path: "follower", name: "Follower", component: Follower },
+    { path: "heart", name: "Heart", component: Heart },
+    {
+      path: "isolated-contexts",
+      name: "Isolated Contexts",
+      component: ParentChild,
+    },
+    { path: "saga", name: "Saga", component: Saga },
+    { path: "pixels", name: "Pixels", component: Pixels },
   ];
+
+  const location = useLocation();
+  $: active = $location.pathname.slice(1);;
 </script>
 
 <div class="page">
+  {#if isDevelopment}
+    <div
+      style="position: fixed; bottom: 0; left: 0; z-index: 1000; background: #00000099; color: #fff; padding: 10px;"
+    >
+      <p>Mode: {mode}</p>
+      <p>Tab: {active}</p>
+    </div>
+  {/if}
   <nav class="menu">
-    {#each tabs as { name, component }, i}
-      <button on:click={() => (tab = i)} class:active={i === tab}>{name}</button>
+    {#each tabs as { path, name }, i}
+      <Link to={path}
+        ><button class:active={path === active}>{name}</button></Link
+      >
     {/each}
   </nav>
   <main>
-    {#each tabs as { name, component }, i}
-      {#if i === tab}
-        <svelte:component this={component} />
-      {/if}
+    {#each tabs as { path, component }, i}
+      <Route {path} {component} />
     {/each}
   </main>
 </div>
@@ -58,7 +73,7 @@
     border-bottom: 3px solid transparent;
     background: transparent;
     cursor: pointer;
-    
+
     &:hover {
       border-bottom-color: #ddd;
     }
@@ -66,7 +81,7 @@
   button.active {
     border-bottom-color: #fff;
   }
-  main{
+  main {
     display: flex;
     justify-content: center;
     align-items: center;

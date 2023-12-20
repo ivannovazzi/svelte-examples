@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getItems, setItems} from "../store";
+  import { getItems, setItems} from "./store";
 
   setItems();  
 

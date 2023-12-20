@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getItems} from "../store";
+  import { getItems} from "./store";
   
   const items = getItems();
 
