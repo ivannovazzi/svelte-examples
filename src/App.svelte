@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount } from "svelte";
   import { Link, Route, useLocation, useNavigate } from "svelte-navigator";
 
   import Follower from "./components/Follower.svelte";
@@ -26,11 +27,13 @@
 
   const location = useLocation();
   $: active = $location.pathname.slice(1);
-  $: console.log(active.length);
-  const n = useNavigate();
-  if (!active?.length) {
-    n(tabs[0].path);
-  }
+  const navigate = useNavigate();
+  
+  onMount(() => {
+    if (!active?.length) {
+      navigate(tabs[0].path);
+    }
+  })
 </script>
 
 <div class="page">
