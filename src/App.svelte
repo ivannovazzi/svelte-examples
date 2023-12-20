@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Link, Route, useLocation } from "svelte-navigator";
+  import { Link, Route, useLocation, useNavigate } from "svelte-navigator";
 
   import Follower from "./components/Follower.svelte";
   import Counter from "./components/Collection.svelte";
@@ -25,7 +25,12 @@
   ];
 
   const location = useLocation();
-  $: active = $location.pathname.slice(1);;
+  $: active = $location.pathname.slice(1);
+  $: console.log(active.length);
+  const n = useNavigate();
+  if (!active?.length) {
+    n(tabs[0].path);
+  }
 </script>
 
 <div class="page">

@@ -4,7 +4,7 @@
   import App from "./App.svelte";
 </script>
 <Router>
-  <Route path="/*">
+  
     <App />
-  </Route>
+  
 </Router>
