@@ -1,15 +1,19 @@
 <script lang="ts">
-  import Block from "./lib/Block.svelte";
+  import Follower from "./lib/Follower.svelte";
   import Counter from "./lib/Collection.svelte";
   import Heart from "./lib/Heart.svelte";
   import ParentChild from "./lib/ParentChild/ParentChild.svelte";
   import Saga from "./lib/Saga.svelte";
   import Pixels from "./lib/Pixels.svelte";
+  
+  const mode = import.meta.env.MODE;
+  const test = import.meta.env.VITE_TEST;
+  const testa = import.meta.env.TEST;
 
   let tab = 0;
   const tabs = [
     { name: "Counter", component: Counter },
-    { name: "Block", component: Block },
+    { name: "Follower", component: Follower },
     { name: "Heart", component: Heart },
     { name: "Isolated Store + Context", component: ParentChild },
     { name: "Saga", component: Saga },
@@ -32,25 +36,40 @@
   </main>
 </div>
 
-<style>
+<style lang="scss">
   .page {
     width: 100%;
     height: 100vh;
+    display: flex;
+    flex-direction: column;
   }
-  nav button {
+  nav {
+    flex: 0;
+    background: #00000099;
+    backdrop-filter: blur(10px);
+    position: relative;
+    z-index: 10;
+  }
+  :global(button) {
     margin: 5px;
     padding: 10px;
     font-size: 20px;
     border: none;
-    border-radius: 5px;
+    border-bottom: 3px solid transparent;
+    background: transparent;
+    cursor: pointer;
+    
+    &:hover {
+      border-bottom-color: #ddd;
+    }
   }
   button.active {
-    background: #000;
-
+    border-bottom-color: #fff;
   }
   main{
     display: flex;
     justify-content: center;
     align-items: center;
+    flex: 1;
   }
 </style>
