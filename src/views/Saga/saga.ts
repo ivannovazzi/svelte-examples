@@ -1,6 +1,6 @@
 import { readable, get } from "svelte/store";
-import storage from "../../lib/storage";
-import { sleep } from "../../utils/sleep";
+import storage from "@/lib/storage";
+import sleep from "@/utils/sleep";
 
 export interface ToDo {
   userId: number;
@@ -8,7 +8,6 @@ export interface ToDo {
   title: string;
   completed: boolean;
 }
-
 
 async function getToDo() {
   const id = Math.floor(Math.random() * 100) + 1;

@@ -1,15 +1,22 @@
 <script>
-  import { logMouseenter} from "../lib/actions";
+  import { logMousemove } from "../lib/actions";
+  let sampling = 300;
 </script>
 
-<div use:logMouseenter>
-
+<div>
+  <div class="block" use:logMousemove={{ sampling }} />
+  <label>
+    throttle
+    <input type="range" min="0" max="1000" bind:value={sampling} />
+    {sampling}ms
+  </label>
 </div>
 
 <style>
-  div {
-    width: 100px;
-    height: 100px;
-    background: #f00;
+  .block {
+    width: 200px;
+    height: 200px;
+    background: #f33;
+    font-weight: bold;
   }
 </style>

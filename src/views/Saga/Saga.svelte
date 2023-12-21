@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Button from "../../components/Button.svelte";
+  import Button from "@/components/Button.svelte";
   import { start, stop, increment, decrement, todo, config } from "./saga";
 </script>
 

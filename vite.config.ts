@@ -7,6 +7,8 @@ export default defineConfig({
   plugins: [svelte()],
   optimizeDeps: { exclude: ["svelte-navigator"] },
   resolve: {
-    alias: [{ find: "@", replacement: path.resolve(__dirname, "src") }],
+    alias: {
+      "@": path.resolve(__dirname, "src"),
+    }
   },
 });

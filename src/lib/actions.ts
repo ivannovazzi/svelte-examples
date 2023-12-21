@@ -1,23 +1,45 @@
+import sleep from "@/utils/sleep";
+import throttle from "@/utils/throttle";
+
 interface Parameters {
-  delay: number;
+  sampling: number;
 }
 
-export function logMouseenter(node: HTMLElement, params: Parameters = { delay: 0 }) {
-
-  async function handleEvent(event: MouseEvent) {
-    await sleep(params.delay);
-    console.log(event.clientX, event.clientY);
+export function logMousemove(node: HTMLElement, params: Parameters = { sampling: 0 }) {
+  function handleEvent(event: MouseEvent) {
+    node.innerHTML = `${event.clientX}, ${event.clientY}`;
   }
 
-  node.addEventListener("mouseenter", handleEvent);
+  let throttledHandleEvent: () => void;
+
+  function setListener() {
+    node.addEventListener("mousemove", throttledHandleEvent);
+    const p = document.createElement("p");
+    p.innerHTML = `throttling at ${params.sampling}ms`;
+    node.appendChild(p);
+  }
+  function makeListener(s: number) {
+    throttledHandleEvent = throttle(s, handleEvent);
+  }
+  function unsetListener() {
+    node.removeEventListener("mousemove", throttledHandleEvent);   
+  }
+
+  makeListener(params.sampling);
+  setListener();
+  
   
   return {
     update(params: Parameters) {
       // the value of `bar` has changed
+      node.innerHTML = `${params.sampling}`;
+      unsetListener();
+      makeListener(params.sampling)
+      setListener();
     },
 
     destroy() {
-      node.removeEventListener("mouseenter", handleEvent);
+      unsetListener();
     }
   };
 }
