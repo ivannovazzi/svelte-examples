@@ -1,19 +1,22 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { Link, Route, useLocation, useNavigate } from "svelte-navigator";
+  import Button from "./components/Button.svelte";
 
-  import Follower from "./components/Follower.svelte";
-  import Counter from "./components/Collection.svelte";
-  import Heart from "./components/Heart.svelte";
-  import ParentChild from "./components/ParentChild/ParentChild.svelte";
-  import Saga from "./components/Saga/Saga.svelte";
-  import Pixels from "./components/Pixels.svelte";
-
-  const mode = import.meta.env.MODE;
-  const isDevelopment = mode === "development";
+  import Animation from "./views/Animation.svelte";
+  import Follower from "./views/Follower.svelte";
+  import Collection from "./views/Collection.svelte";
+  import Heart from "./views/Heart.svelte";
+  import ParentChild from "./views/ParentChild/ParentChild.svelte";
+  import Saga from "./views/Saga/Saga.svelte";
+  import Pixels from "./views/Pixels.svelte";
+  import Actions from "./views/Actions.svelte";
+  import DevStatus from "./components/DevStatus.svelte";
 
   const tabs = [
-    { path: "counter", name: "Counter", component: Counter },
+    { path: "actions", name: "Actions", component: Actions },
+    { path: "animation", name: "Animation", component: Animation },
+    { path: "data-access", name: "Data Access", component: Collection },
     { path: "follower", name: "Follower", component: Follower },
     { path: "heart", name: "Heart", component: Heart },
     {
@@ -28,32 +31,26 @@
   const location = useLocation();
   $: active = $location.pathname.slice(1);
   const navigate = useNavigate();
-  
+
   onMount(() => {
     if (!active?.length) {
       navigate(tabs[0].path);
     }
-  })
+  });
 </script>
 
 <div class="page">
-  {#if isDevelopment}
-    <div
-      style="position: fixed; bottom: 0; left: 0; z-index: 1000; background: #00000099; color: #fff; padding: 10px;"
-    >
-      <p>Mode: {mode}</p>
-      <p>Tab: {active}</p>
-    </div>
-  {/if}
+  <DevStatus />
+
   <nav class="menu">
     {#each tabs as { path, name }, i}
       <Link to={path}
-        ><button class:active={path === active}>{name}</button></Link
+        ><Button active={path === active} on:mouseenter={console.log}>{name}</Button></Link
       >
     {/each}
   </nav>
   <main>
-    {#each tabs as { path, component }, i}
+    {#each tabs as { path, component }}
       <Route {path} {component} />
     {/each}
   </main>
@@ -68,27 +65,11 @@
   }
   nav {
     flex: 0;
-    background: #00000099;
-    backdrop-filter: blur(10px);
+    background: #000000;
     position: relative;
     z-index: 10;
   }
-  :global(button) {
-    margin: 5px;
-    padding: 10px;
-    font-size: 20px;
-    border: none;
-    border-bottom: 3px solid transparent;
-    background: transparent;
-    cursor: pointer;
-
-    &:hover {
-      border-bottom-color: #ddd;
-    }
-  }
-  button.active {
-    border-bottom-color: #fff;
-  }
+  
   main {
     display: flex;
     justify-content: center;

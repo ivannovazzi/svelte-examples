@@ -3,7 +3,7 @@
   import { curveBasis, line } from "d3-shape";
 
   let heartRate: number = 0;
-  let paths: [number, number][] = [[0,  100]];
+  let paths: [number, number][] = [[0, 100]];
 
   onMount(async () => {
     chainLoadData();
@@ -41,13 +41,19 @@
   }
   // draw a path based on the heart rate changing over time
   $: if (heartRate > 0) addPoint(heartRate);
-  
+
   let curve = line().curve(curveBasis);
   $: d = curve(paths);
-  
-
-  
 </script>
+
+<div>
+  {heartRate} bpm - {paths.length}
+  <svg viewBox="0 0 300 100">
+    <g class="canvas">
+      <path {d} style="" />
+    </g>
+  </svg>
+</div>
 
 <style>
   svg {
@@ -60,12 +66,3 @@
     fill: none;
   }
 </style>
-
-<div>
-  {heartRate} bpm - {paths.length}
-  <svg viewBox="0 0 300 100">
-		<g class="canvas">
-      <path d={d} style=""/>
-    </g>
-  </svg>
-</div>

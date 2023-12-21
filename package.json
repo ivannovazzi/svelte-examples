@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@types/d3-shape": "^3.1.6",
+    "@types/node": "^20.10.5",
     "d3-shape": "^3.2.0",
     "svelte-navigator": "^3.2.2"
   }

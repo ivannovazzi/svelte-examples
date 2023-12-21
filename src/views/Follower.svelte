@@ -41,8 +41,8 @@
 
 <div class="cursor" {style}></div>
 <div class="grid" bind:clientHeight={h} bind:clientWidth={w}>
-  {#each (new Array(90).fill(0)) as item , i}
-    <div class="grid-item"/>
+  {#each new Array(90).fill(0) as item, i}
+    <div class="grid-item" />
   {/each}
 </div>
 
@@ -72,6 +72,6 @@
     &-item {
       backdrop-filter: blur(20px);
       background-color: #00000099;
-    }    
+    }
   }
 </style>
