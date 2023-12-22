@@ -13,29 +13,25 @@ export function logMousemove(
   }
 
   let throttledHandleEvent: (event: MouseEvent) => void;
+  let p = document.createElement("p");
 
-  function setListener() {
+  node.appendChild(p);
+
+  function makeListener(sampling: number) {
+    throttledHandleEvent = throttle(sampling, handleEvent);
     node.addEventListener("mousemove", throttledHandleEvent);
-    const p = document.createElement("p");
-    p.innerHTML = `throttling at ${params.sampling}ms`;
-    node.appendChild(p);
-  }
-  function makeListener(s: number) {
-    throttledHandleEvent = throttle(s, handleEvent);
+    p.innerHTML = `throttling at ${sampling}ms`;
   }
   function unsetListener() {
     node.removeEventListener("mousemove", throttledHandleEvent);
   }
 
   makeListener(params.sampling);
-  setListener();
 
   return {
     update(params: Parameters) {
-      node.innerHTML = `${params.sampling}`;
       unsetListener();
       makeListener(params.sampling);
-      setListener();
     },
 
     destroy() {
