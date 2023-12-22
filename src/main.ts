@@ -1,8 +1,9 @@
-import './app.css'
-import Router from './Router.svelte'
+import "./app.css";
+import Router from "./Router.svelte";
+import { createRoot } from "svelte";
 
-const app = new Router({
-  target: document.getElementById('app')!,
-})
+const app = createRoot(Router, {
+  target: document.getElementById("app")!,
+});
 
-export default app
+export default app;

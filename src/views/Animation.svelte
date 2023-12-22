@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { onMount } from "svelte";
   import { tweened } from "svelte/motion";
   import {
     fade,
@@ -7,42 +6,41 @@
     type FadeParams,
   } from "svelte/transition";
   import { cubicOut } from "svelte/easing";
+  import { type ToDo } from "@/types/common";
 
   const progress = tweened(0);
   progress.set(400);
   progress.update((x) => Math.min(100, x));
   $: style = `width: ${$progress.toFixed(1)}%`;
 
-  let todos = [
+  let todos: ToDo[] = [
     {
+      userId: 1,
       id: 1,
       title: "Do the dishes",
-      done: false,
+      completed: false,
     },
     {
+      userId: 1,
       id: 2,
       title: "Take out the trash",
-      done: false,
+      completed: false,
     },
     {
+      userId: 1,
       id: 3,
       title: "Mow the lawn",
-      done: false,
+      completed: false,
     },
   ];
 
-  function toggleDone(todo) {
-    console.log("dio");
+  function togglecompleted(todo: ToDo) {
     const { id } = todo;
-    todos = todos.map((t) => (t.id === id ? { ...t, done: !t.done } : t));
+    todos = todos.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t));
   }
 
-  $: undoneTodos = todos.filter((todo) => !todo.done);
+  $: uncompletedTodos = todos.filter((todo) => !todo.completed);
 
-  $: {
-    console.log("rodos", todos);
-    console.log("undoneTodos", undoneTodos);
-  }
   const mytransition = (
     node: Element,
     { delay, duration, easing }: FadeParams
@@ -68,7 +66,7 @@
   </div>
 
   <div class="items">
-    {#each undoneTodos as todo (todo.id)}
+    {#each uncompletedTodos as todo (todo.id)}
       <div
         class="item"
         transition:mytransition={{ delay: 0, duration: 500, easing: cubicOut }}
@@ -76,8 +74,8 @@
         <label>
           <input
             type="checkbox"
-            checked={todo.done}
-            on:change={() => toggleDone(todo)}
+            checked={todo.completed}
+            on:change={() => togglecompleted(todo)}
           />
           {todo.title}
         </label>

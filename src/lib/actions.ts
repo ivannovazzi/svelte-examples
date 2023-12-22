@@ -1,4 +1,3 @@
-import sleep from "@/utils/sleep";
 import throttle from "@/utils/throttle";
 
 interface Parameters {
@@ -6,11 +5,11 @@ interface Parameters {
 }
 
 export function logMousemove(node: HTMLElement, params: Parameters = { sampling: 0 }) {
-  function handleEvent(event: MouseEvent) {
+  function handleEvent(event: MouseEvent): void {
     node.innerHTML = `${event.clientX}, ${event.clientY}`;
   }
 
-  let throttledHandleEvent: () => void;
+  let throttledHandleEvent: (event: MouseEvent) => void;
 
   function setListener() {
     node.addEventListener("mousemove", throttledHandleEvent);

@@ -1,9 +1,10 @@
-export default function throttle(ms: number, fn: Function) {
+export default function throttle<T extends ((...args: any[]) => any)>(ms: number, fn: T):T {
   let last = 0;
-  return function throttled(...args: any) {
+  const returned = function () {
     const now = Date.now();
     if (now - last < ms) return;
     last = now;
-    return fn(...args);
+    return fn(...arguments);
   };
+  return returned as T;
 }
