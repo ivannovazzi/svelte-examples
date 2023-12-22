@@ -4,7 +4,10 @@ interface Parameters {
   sampling: number;
 }
 
-export function logMousemove(node: HTMLElement, params: Parameters = { sampling: 0 }) {
+export function logMousemove(
+  node: HTMLElement,
+  params: Parameters = { sampling: 0 }
+) {
   function handleEvent(event: MouseEvent): void {
     node.innerHTML = `${event.clientX}, ${event.clientY}`;
   }
@@ -21,24 +24,22 @@ export function logMousemove(node: HTMLElement, params: Parameters = { sampling:
     throttledHandleEvent = throttle(s, handleEvent);
   }
   function unsetListener() {
-    node.removeEventListener("mousemove", throttledHandleEvent);   
+    node.removeEventListener("mousemove", throttledHandleEvent);
   }
 
   makeListener(params.sampling);
   setListener();
-  
-  
+
   return {
     update(params: Parameters) {
-      // the value of `bar` has changed
       node.innerHTML = `${params.sampling}`;
       unsetListener();
-      makeListener(params.sampling)
+      makeListener(params.sampling);
       setListener();
     },
 
     destroy() {
       unsetListener();
-    }
+    },
   };
 }
