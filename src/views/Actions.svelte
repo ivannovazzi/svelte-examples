@@ -1,5 +1,5 @@
 <script>
-  import { logMousemove } from "../lib/actions";
+  import { logMousemove } from "@/lib/actions";
   let sampling = 300;
 </script>
 
